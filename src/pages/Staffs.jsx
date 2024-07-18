@@ -112,7 +112,63 @@ export const Staffs = () => {
   return (
     <>
       <div className="flex">
-       
+        {/* Sidebar section */}
+        {/* <div
+          className={`bg-dark-blue h-screen p-5 pt-8 ${
+            open? "w-72" : "w-20"
+          } duration-300 relative`}
+        >
+          <BsArrowLeft
+            className={`bg-white text-3xl absolute -right-3 top-9 rounded-full border-2 border-dark-blue cursor-pointer ${
+            !open && "rotate-180 duration-300"
+            }`}
+            onClick={() => setOpen(!open)}
+          />
+          <div className="inline-flex">
+            <PiUsersThreeDuotone className="text-light-blue text-4xl rounded cursor-pointer block float-left mr-2" />
+            <h3
+              className={`text-white origin-left font-medium text-lg mt-1 duration-50 ${
+              !open && "hidden"
+              }`}
+            >
+              WORK STATUS PORTAL
+            </h3>
+          </div>
+          <ul className="pt-2">
+            <li
+              className={`text-gray-300 cursor-pointer text-sm flex items-center gap-x-4 p-2 hover:bg-light-blue
+              }  rounded duration-300 mt-2`}
+            >
+              <span className="text-2xl block float-left">
+                <MdOutlineSpaceDashboard />
+              </span>
+              <span className={`text-base font-medium flex-1 ${!open && "hidden"}`}>
+                Dashboard
+              </span>
+            </li>
+            <li className={`text-gray-300 cursor-pointer text-sm flex items-center gap-x-4 p-2 hover:bg-light-blue
+              }  rounded duration-300 mt-2`}
+            >
+              <span className="text-2xl block float-left">
+                <MdTask />
+              </span>
+              <span className={`text-base font-medium flex-1 ${!open && "hidden"}`}>
+                Task
+              </span>
+            </li>
+            <li
+              className={`text-gray-300 cursor-pointer text-sm flex items-center gap-x-4 p-2 bg-light-blue
+              }  rounded duration-300 mt-2`}
+            >
+              <span className="text-2xl block float-left">
+                <GrUserWorker />
+              </span>
+              <span className={`text-base font-medium flex-1 ${!open && "hidden"}`}>
+                Staff
+              </span>
+            </li>
+          </ul>
+        </div> */}
 
         {/* Content section with search bar at right corner */}
         <div className="inline-block flex-grow p-7">
@@ -128,15 +184,15 @@ export const Staffs = () => {
             <table className="border border-collapse w-full mt-4">
               <thead>
                 <tr className="bg-gray-200 text-sm font-medium">
-                  <th className="px-4 py-2">Profile Photo</th>
 
-                  <th className="px-4 py-2">Name</th>
-                  <th className="px-4 py-2">Email</th>
-                  <th className="px-4 py-2">Phone</th>
-                  <th className="px-4 py-2">Staff ID</th>
-                  <th className="px-4 py-2">Status</th>
-                  <th className="px-4 py-2">Designation</th>
-                  <th className="px-4 py-2">Skill</th>
+                  <th className="px-4 py-2 border border-r-white">Profile Photo</th>
+                  <th className="px-4 py-2 border border-r-white">Name</th>
+                  <th className="px-4 py-2 border border-r-white">Email</th>
+                  <th className="px-4 py-2 border border-r-white">Phone</th>
+                  <th className="px-4 py-2 border border-r-white">Staff ID</th>
+                  <th className="px-4 py-2 border border-r-white">Status</th>
+                  <th className="px-4 py-2 border border-r-white">Designation</th>
+                  <th className="px-4 py-2 border border-r-white">Skill</th>
                 </tr>
               </thead>
               <tbody>
