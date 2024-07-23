@@ -202,42 +202,7 @@ export const Dashboard = () => {
   return (
     <div className="flex flex-col min-h-screen bg-white text-gray-900">
       {/* Navbar */}
-      <div className="bg-white text-gray-900 p-4 shadow-md">
-        <h1 className="text-3xl font-bold flex items-center">
-          Dashboard
-        </h1>
-        <ul className="flex space-x-4 mt-2">
-          <li>
-            <button
-              className="bg-gray-800 text-white px-6 py-2 rounded shadow-md transform transition-transform hover:bg-light-blue duration-300"
-              onClick={() => setSelectedSection("overview")}
-            >
-              Overview <DashboardIcon className="ml-2 inline" />
-            </button>
-          </li>
-          <li>
-            <button
-              className="bg-gray-800 text-white px-6 py-2 rounded shadow-md transform transition-transform duration-300 hover:bg-light-blue "
-              onClick={() => setSelectedSection("location")}
-            >
-              Location <UsersIcon className="ml-2 inline" />
-            </button>
-          </li>
-          <li>
-            <button
-              className="bg-gray-800 text-white px-6 py-2 rounded shadow-md transform transition-transform hover:bg-light-blue duration-300"
-              onClick={() => setSelectedSection("workers")}
-            >
-              Workers <WorkerIcon className="ml-2 inline" />
-            </button>
-          </li>
-          <li>
-            <button
-              className="bg-gray-800 text-white px-6 py-2 rounded shadow-md transform transition-transform hover:bg-light-blue duration-300"
-              onClick={() => setSelectedSection("tasks")}
-            >
-              Tasks <TaskIcon className="ml-2 inline" />
-            </button>
+    
           </li>
         </ul>
       </div>
