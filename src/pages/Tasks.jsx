@@ -1,8 +1,11 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
+
+const BASE_URL = "http://localhost:5173/api/task";
+
 
 export const Tasks = () => {
-  const [open, setOpen] = useState(true);
   const [taskData, setTaskData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showTaskDetails, setShowTaskDetails] = useState(false);
@@ -20,14 +23,27 @@ export const Tasks = () => {
     staffNames: [""]
   });
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterOption, setFilterOption] = useState("all");
   const [notification, setNotification] = useState("");
+
+  useEffect(() => {
+    fetchTaskData();
+  }, []);
+
+  const fetchTaskData = async () => {
+    try {
+      const response = await axios.get(BASE_URL);
+      setTaskData(response.data);
+    } catch (error) {
+      console.error("Error fetching task data:", error);
+      setNotification("Failed to fetch task data");
+    }
+  };
 
   const handleCreateNewTask = () => {
     setShowPopup(true);
   };
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     if (
       !newTask.taskid ||
       !newTask.nature ||
@@ -41,21 +57,28 @@ export const Tasks = () => {
       setNotification("All fields are required and staff names must be provided. If status is Delayed, reason for delay must be provided.");
       return;
     }
-    setTaskData([...taskData, newTask]);
-    setShowPopup(false);
-    setNewTask({
-      taskid: "",
-      nature: "",
-      location: "",
-      number: 1,
-      workin: "",
-      workout: "",
-      status: "",
-      remarks: "",
-      reasonForDelay: "",
-      staffNames: [""]
-    });
-    setNotification("");
+
+    try {
+      const response = await axios.post(BASE_URL, newTask);
+      setTaskData([...taskData, response.data]);
+      setShowPopup(false);
+      setNewTask({
+        taskid: "",
+        nature: "",
+        location: "",
+        number: 1,
+        workin: "",
+        workout: "",
+        status: "",
+        remarks: "",
+        reasonForDelay: "",
+        staffNames: [""]
+      });
+      setNotification("");
+    } catch (error) {
+      console.error("Error adding new task:", error);
+      setNotification("Failed to add task");
+    }
   };
 
   const handleCancel = () => {
@@ -112,33 +135,41 @@ export const Tasks = () => {
     setShowTaskDetails(true);
   };
 
-  const handleUpdateStatus = (status, reasonForDelay) => {
-    setTaskData(taskData.map(task =>
-      task.taskid === selectedTask.taskid
-        ? { ...task, status, reasonForDelay }
-        : task
-    ));
-    setSelectedTask({ ...selectedTask, status, reasonForDelay });
-    setNotification("Task status updated successfully.");
-  };
-
-  const filteredTaskData = taskData.filter(task => {
-    if (filterOption === "all") {
-      return (
-        task.taskid.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.nature.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.number.toString().includes(searchTerm) ||
-        task.workin.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.workout.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.remarks.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (task.status === "Delayed" && task.reasonForDelay.toLowerCase().includes(searchTerm.toLowerCase()))
+  const handleUpdateStatus = async (status, reasonForDelay) => {
+    try {
+      const updatedTask = { 
+        status, 
+        reasonForDelay 
+      };
+      const response = await axios.put(`${BASE_URL}/update/${selectedTask._id}`, updatedTask);
+      
+      // Update the taskData state with the modified task
+      setTaskData(prevTasks =>
+        prevTasks.map(task => 
+          task._id === selectedTask._id ? response.data : task
+        )
       );
-    } else {
-      return task[filterOption].toLowerCase().includes(searchTerm.toLowerCase());
+  
+      // Optionally clear the selected task or update as needed
+      setSelectedTask(null);  // Clear the selected task if needed
+  
+      // Optionally show a notification or message
+      setNotification("Task status updated successfully.");
+    } catch (error) {
+      console.error("Error updating task status:", error);
+      setNotification("Failed to update task status");
     }
-  });
+  };
+  
+  
+
+  const filteredTaskData = taskData.filter(task =>
+    Object.values(task).some(
+      value =>
+        typeof value === "string" &&
+        value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
   return (
     <>
@@ -193,7 +224,7 @@ export const Tasks = () => {
                 </div>
               </div>
               {notification && (
-                <div className="bg-red-100 text-red-500 p-2 rounded mb-4 mt-5">
+                <div className="bg-green-100 text-green-500 p-2 rounded mb-4 mt-5">
                   {notification}
                 </div>
               )}
@@ -237,7 +268,7 @@ export const Tasks = () => {
                         <td className="px-4 py-2 border text-left">{task.workout}</td>
                         <td className="px-4 py-2 border text-left">{task.status}</td>
                         <td className="px-4 py-2 border text-left">{task.remarks}</td>
-                      </tr>
+                        </tr>
                     ))}
                   </tbody>
                 </table>
@@ -253,7 +284,7 @@ export const Tasks = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex justify-center"
+                    className="absolute top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 flex justify-center items-center"
                   >
                     <motion.div
                       initial={{ y: -50, opacity: 0 }}
@@ -263,7 +294,7 @@ export const Tasks = () => {
                       className="bg-white p-4 rounded w-1/2"
                     >
                       <h2 className="text-2xl font-semibold">Create New Task</h2>
-                      <form>
+                      <form onSubmit={(e) => { e.preventDefault(); handleAddTask(); }}>
                         <label>
                           Task Id:
                           <input
@@ -399,9 +430,8 @@ export const Tasks = () => {
                             Cancel
                           </button>
                           <button
-                            type="button"
+                            type="submit"
                             className="border border-light-blue text-light-blue px-5 py-1 mt-5 rounded hover:bg-light-blue hover:text-white duration-300"
-                            onClick={handleAddTask}
                           >
                             Add Task
                           </button>

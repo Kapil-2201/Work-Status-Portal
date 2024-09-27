@@ -4,11 +4,11 @@ import { MdOutlineSpaceDashboard as DashboardIcon, MdTask as TaskIcon } from "re
 import { GrUserWorker as WorkerIcon } from "react-icons/gr";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
-
 const OverviewSection = () => {
   const doughnutOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: false,  // Disable animation
   };
 
   const doughnutData = {
@@ -67,6 +67,7 @@ const OverviewSection = () => {
   const barOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: false,  
     scales: {
       y: {
         beginAtZero: true,
@@ -101,7 +102,7 @@ const OverviewSection = () => {
 };
 
 const WorkersSection = () => {
-  const presentWorkers = 15; // Example data
+  const presentWorkers = 15;
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
