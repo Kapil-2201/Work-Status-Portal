@@ -1,18 +1,38 @@
 const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-// Task model (replace with actual Mongoose model or other)
-const Task = require('../models/taskModel'); 
+// Load environment variables
+dotenv.config();
 
-// POST route for creating a new task
-router.post('/task', async (req, res) => {
-  try {
-    const newTask = new Task(req.body);
-    await newTask.save();
-    res.status(201).json(newTask);
-  } catch (error) {
-    res.status(400).json({ message: 'Error adding task', error });
-  }
+const app = express();
+const port = process.env.PORT || 5173;  // Ensure this is 5173
+
+// Import routes
+const staffRouter = require('./routes/staff');
+const taskRouter = require('./routes/task');
+
+// Middleware
+const corsOptions = {
+  origin: 'http://localhost:3000',  // This should match your React app's URL
+  optionsSuccessStatus: 200,
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// Use routes
+app.use('/api/staff', staffRouter);
+app.use('/api/task', taskRouter);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connection established'))
+  .catch((error) => console.log('MongoDB connection error:', error));
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
 });
-
-module.exports = router;
