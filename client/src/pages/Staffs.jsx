@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const BASE_URL = "http://localhost:5173/api/staff";
+import BASE_URL from '../config';
+// const BASE_URL = "http://localhost:5173/api/staff";
 
 export const Staffs = () => {
   const navigate = useNavigate();
