@@ -55,9 +55,12 @@ const attendanceRouter = require('./routes/attendance');
 
 // Middleware
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://work-status-portal.vercel.app"],  // This should match your React app's URL
+  origin: ["https://work-status-portal.vercel.app"], // Allow frontend domain
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 200,
 };
+
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
