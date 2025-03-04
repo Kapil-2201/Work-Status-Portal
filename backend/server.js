@@ -16,18 +16,30 @@ const attendanceRouter = require('./routes/attendance');
 
 
 // Middleware
+const cors = require('cors');
+
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://work-status-portal.vercel.app"],  // This should match your React app's URL
-  origin: ["https://work-status-portal.vercel.app"], // Allow frontend domain
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 200,
+  origin: "https://work-status-portal.vercel.app", // Allow only your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true // Allow cookies and authentication headers
 };
 
-
-// Apply CORS middleware
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Handle CORS preflight requests manually
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://work-status-portal.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 
 // Use routes
 app.use('/api/staff', staffRouter);
