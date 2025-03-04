@@ -16,8 +16,8 @@ const WorkersSection = () => {
     const fetchData = async () => {
       try {
         const [workersResponse, attendanceResponse] = await Promise.all([
-          axios.get('http://localhost:5173/api/staff'),
-          axios.get('http://localhost:5173/api/attendance/history')
+          axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
+          axios.get('https://work-status-portal-backend.vercel.app/api/attendance/history')
         ]);
         
         setWorkers(workersResponse.data);
