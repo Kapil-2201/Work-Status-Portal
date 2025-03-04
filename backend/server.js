@@ -55,11 +55,12 @@ const attendanceRouter = require('./routes/attendance');
 
 // Middleware
 const corsOptions = {
-  origin: ["https://work-status-portal.vercel.app"], // Allow frontend domain
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+  origin: ['http://localhost:3000', 'https://work-status-portal.vercel.app'],  
   optionsSuccessStatus: 200,
 };
+
+app.use(cors(corsOptions));
+
 
 
 // Apply CORS middleware
