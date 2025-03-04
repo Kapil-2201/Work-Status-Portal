@@ -32,9 +32,9 @@ const OverviewSection = () => {
       try {
         // Fetch all required data in parallel
         const [taskResponse, staffResponse, attendanceResponse] = await Promise.all([
-          axios.get('http://localhost:5173/api/task'),
-          axios.get('http://localhost:5173/api/staff'),
-          axios.get('http://localhost:5173/api/attendance/history')
+          axios.get('https://work-status-portal-backend.vercel.app/api/task'),
+          axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
+          axios.get('https://work-status-portal-backend.vercel.app/attendance/history')
         ]);
         
         const tasks = taskResponse.data || [];
