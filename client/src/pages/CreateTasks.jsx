@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 
-const BASE_URL = "http://localhost:5173/api/task";
+const BASE_URL = "https://work-status-portal-backend.vercel.app/api/task";
 
 export const CreateTasks = () => {
   const navigate = useNavigate();
