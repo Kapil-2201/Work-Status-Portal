@@ -20,8 +20,8 @@ export const WorkersAttendance = () => {
     setLoading(true);
     try {
       const [staffRes, attendanceRes] = await Promise.all([
-        axios.get('http://localhost:5173/api/staff'),
-        axios.get('http://localhost:5173/api/attendance/history')
+        axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
+        axios.get('https://work-status-portal-backend.vercel.app/api/attendance/history')
       ]);
 
       const staffData = staffRes.data;
@@ -61,7 +61,7 @@ export const WorkersAttendance = () => {
       const isPresent = status === 'PR';
 
       if (status !== 'Unmarked') {
-        const response = await axios.post('http://localhost:5173/api/attendance', {
+        const response = await axios.post('https://work-status-portal-backend.vercel.app/api/attendance', {
           date,
           staffId,
           isPresent,
