@@ -15,7 +15,7 @@ const TasksSection = () => {
     const fetchTasks = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('http://localhost:5173/api/task');
+        const response = await axios.get('https://work-status-portal-backend.vercel.app/api/task');
         const tasksData = response.data || [];
         setTasks(tasksData);
         
