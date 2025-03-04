@@ -20,11 +20,11 @@ const LocationSection = () => {
       setLoading(true);
       try {
         // Fetch tasks
-        const taskResponse = await axios.get('http://localhost:5173/api/task');
+        const taskResponse = await axios.get('https://work-status-portal-backend.vercel.app/api/task');
         const tasks = taskResponse.data;
   
         // Fetch staff
-        const staffResponse = await axios.get('http://localhost:5173/api/staff');
+        const staffResponse = await axios.get('https://work-status-portal-backend.vercel.app/api/staff');
         const staff = staffResponse.data;
   
         // Get unique locations from tasks
