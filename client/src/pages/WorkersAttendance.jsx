@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 export const WorkersAttendance = () => {
   const [staff, setStaff] = useState([]);
@@ -20,8 +21,8 @@ export const WorkersAttendance = () => {
     setLoading(true);
     try {
       const [staffRes, attendanceRes] = await Promise.all([
-        axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
-        axios.get('https://work-status-portal-backend.vercel.app/api/attendance/history')
+        axios.get(`${BASE_URL}/staff`),
+        axios.get(`${BASE_URL}/attendance/history`)
       ]);
 
       const staffData = staffRes.data;
@@ -61,7 +62,7 @@ export const WorkersAttendance = () => {
       const isPresent = status === 'PR';
 
       if (status !== 'Unmarked') {
-        const response = await axios.post('https://work-status-portal-backend.vercel.app/api/attendance', {
+        const response = await axios.post(`${BASE_URL}/attendance/history`, {
           date,
           staffId,
           isPresent,

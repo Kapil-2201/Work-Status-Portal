@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const BASE_URL = "https://work-status-portal-backend.vercel.app/api/task";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/task`;
 
 export const Tasks = () => {
   const navigate = useNavigate();
