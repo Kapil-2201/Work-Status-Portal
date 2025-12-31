@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+
 const dotenv = require('dotenv');
 
 // Load environment variables
@@ -55,3 +55,4 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
+
