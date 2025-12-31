@@ -4,6 +4,10 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+
+
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/`;
+
 const LocationSection = () => {
     const [locations, setLocations] = useState([]);
     const [tasksByLocation, setTasksByLocation] = useState({});
@@ -20,11 +24,11 @@ const LocationSection = () => {
       setLoading(true);
       try {
         // Fetch tasks
-        const taskResponse = await axios.get('https://work-status-portal-backend.vercel.app/api/task');
+        const taskResponse = await axios.get(`${BASE_URL}task`);
         const tasks = taskResponse.data;
   
         // Fetch staff
-        const staffResponse = await axios.get('https://work-status-portal-backend.vercel.app/api/staff');
+        const staffResponse = await axios.get(`${BASE_URL}staff`);
         const staff = staffResponse.data;
   
         // Get unique locations from tasks

@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
+
+
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/`;
+
 const TasksSection = () => {
   const [tasks, setTasks] = useState([]);
   const [taskStats, setTaskStats] = useState({ completed: 0, delayed: 0, inProgress: 0 });
@@ -15,7 +19,7 @@ const TasksSection = () => {
     const fetchTasks = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('https://work-status-portal-backend.vercel.app/api/task');
+        const response = await axios.get(`${BASE_URL}task`);
         const tasksData = response.data || [];
         setTasks(tasksData);
         

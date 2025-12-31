@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
+
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/`;
+
 const OverviewSection = () => {
   // State for all data
   const [loading, setLoading] = useState(true);
@@ -32,9 +35,9 @@ const OverviewSection = () => {
       try {
         // Fetch all required data in parallel
         const [taskResponse, staffResponse, attendanceResponse] = await Promise.all([
-          axios.get('https://work-status-portal-backend.vercel.app/api/task'),
-          axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
-          axios.get('https://work-status-portal-backend.vercel.app/attendance/history')
+          axios.get(`${BASE_URL}task`),
+          axios.get(`${BASE_URL}staff`),
+          axios.get(`${BASE_URL}attendance/history`)
         ]);
         
         const tasks = taskResponse.data || [];

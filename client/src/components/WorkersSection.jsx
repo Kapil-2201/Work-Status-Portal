@@ -4,6 +4,10 @@ import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/`;
+
+
+
 // Updated Workers Section with attendance data from /api/attendance/history
 const WorkersSection = () => {
   const [workers, setWorkers] = useState([]);
@@ -16,8 +20,8 @@ const WorkersSection = () => {
     const fetchData = async () => {
       try {
         const [workersResponse, attendanceResponse] = await Promise.all([
-          axios.get('https://work-status-portal-backend.vercel.app/api/staff'),
-          axios.get('https://work-status-portal-backend.vercel.app/api/attendance/history')
+          axios.get(`${BASE_URL}staff`),
+          axios.get(`${BASE_URL}attendance/history`)
         ]);
         
         setWorkers(workersResponse.data);
